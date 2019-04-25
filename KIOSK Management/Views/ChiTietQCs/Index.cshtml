@@ -1,0 +1,61 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<KIOSK_Management.Models.V_ChiTietQC>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Số HD
+        </th>
+        <th>
+            Mã KO
+        </th>
+        <th>
+            Mã QC
+        </th>
+        <th>
+            Ngày bắt đầu QC
+        </th>
+        <th>
+            Ngày kết thúc QC
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MAKO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaQC)
+            </td>
+            <td>
+                @string.Format("{0:dd-MMM-yyyy}", item.NgayBDQC)
+            </td>
+            <td>
+                @string.Format("{0:dd-MMM-yyyy}", item.NgayKTQC)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { SoHD = item.SoHD, MAKO = item.MAKO, MaQC = item.MaQC })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

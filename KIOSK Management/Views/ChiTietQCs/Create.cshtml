@@ -1,0 +1,95 @@
+﻿@model KIOSK_Management.Models.ChiTietThueKIOSKQC
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ChiTietQC</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SoHD, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SoHD, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.SoHD, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MAKO, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MAKO, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.MAKO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <input type="hidden" id="qtyTotal" name="qtyTotal" value="0" />
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="number" min="1" step="1" id="qtyAdd" class="form-control" value="1" style="display:inline-block" />
+                <div id="btnAdd" class="btn btn-success">+</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Quảng cáo</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var qtyTotal = 0;
+            $("#qtyTotal").val(qtyTotal);
+            var rowhtmlbase = '@(Html.Action("_QuangCaoRow"))';
+
+            $("#btnAdd").click(function () {
+                var qty = $("#qtyAdd").val();
+
+                for (var i = 1; i <= qty; i++)
+                {
+                    //var id = $("#qtyTotal").val();
+                    var rowhtml = rowhtmlbase.replace(/id/g, qtyTotal);
+                    $("#tbbody").prepend(rowhtml);
+                    qtyTotal += 1;
+                    $("#qtyTotal").val(qtyTotal);
+                }
+
+            });
+        });
+    </script>
+}

@@ -1,0 +1,13 @@
+﻿@using KIOSK_Management.Models;
+@model List<ChiTietThueKIOSKQC>
+
+<select name="MaKO" class="form-control">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        if (i == 0)
+        {
+            <option value="@Model[i].MAKO" selected>@Model[i].KIOSK.TenKO</option>
+        }
+        <option value="@Model[i].MAKO">@Model[i].KIOSK.TenKO</option>
+    }
+</select>

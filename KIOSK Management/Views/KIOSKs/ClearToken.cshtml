@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "ClearToken";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model bool
+
+<h2>ClearToken</h2>
+
+@if (Model == true)
+{
+    <div class="alert alert-success">Cleared all tokens</div>
+}
+else
+{
+    <div class="alert alert-danger">Failed</div>
+}

@@ -1,0 +1,117 @@
+﻿@model KIOSK_Management.Models.KIOSK
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "KIOSKs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+    <h4>KIOSK</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.MAKO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MAKO, new { htmlAttributes = new { @class = "form-control", maxlength = "18", required = "required" } })
+            @Html.ValidationMessageFor(model => model.MAKO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenKO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TenKO, new { htmlAttributes = new { @class = "form-control", maxlength = "100" } })
+            @Html.ValidationMessageFor(model => model.TenKO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayXD, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="date" name="NgayXD" for="NgayXD" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Model.NgayXD)" />
+            @Html.ValidationMessageFor(model => model.NgayXD, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayVH, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="date" name="NgayVH" for="NgayVH" class="form-control" value="@string.Format("{0:yyyy-MM-dd}", Model.NgayVH)" />
+            @Html.ValidationMessageFor(model => model.NgayVH, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DiaDiem, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DiaDiem, new { htmlAttributes = new { @class = "form-control", maxlength = "100" } })
+            @Html.ValidationMessageFor(model => model.DiaDiem, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TrangThaiKo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @if (Model.TrangThaiKo)
+                {
+                    <input type="checkbox" class="form-check" name="TrangThaiKo" value="true" checked> @:Đang hoạt động
+                }
+                else
+                {
+                    <input type="checkbox" class="form-check" name="TrangThaiKo" value="true"> @:Đang hoạt động
+                }
+
+                @Html.ValidationMessageFor(model => model.TrangThaiKo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImageBanner, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" id="ImageBanner" name="ImageBanner" class="form-control" readonly value="@Model.ImageBanner" />
+            <img class="img-responsive" src="~/Images/KIOSK/@Model.ImageBanner" alt="@Model.ImageBanner" style="display:block;max-width:300px;">
+            <div id="btnClearImage" class="btn btn-outline-secondary form-control" style="max-width:280px;">Clear</div>
+            <input type="file" class="form-control-file" name="fImageBanner" />
+            @Html.ValidationMessageFor(model => model.ImageBanner, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ConnectStr, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ConnectStr, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConnectStr, "", new { @class = "text-danger", maxlength = "200" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Edit" class="btn btn-default" />
+        </div>
+    </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+            $(document).ready(function () {
+                $("#btnClearImage").click(function () {
+                    $("#ImageBanner").val(null);
+                });
+            });
+    </script>
+}

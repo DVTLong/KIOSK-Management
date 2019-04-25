@@ -1,0 +1,3 @@
+﻿@using KIOSK_Management.Models
+@model List<QuangCao>
+<tr><td><select name="maqc_id" class="form-control">@for (int i=0; i < Model.Count; i++){if (i==0){<option value="@Model[i].MaQC" selected>@Model[i].NoiDung</option>}else{<option value="@Model[i].MaQC">@Model[i].NoiDung</option>}}</select></td><td><input type="date" name="ngaybdqc_id" class="form-control" /></td><td><input type="date" name="ngayktqc_id" class="form-control" /></td></tr>   

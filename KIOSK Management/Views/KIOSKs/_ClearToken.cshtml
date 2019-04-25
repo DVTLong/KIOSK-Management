@@ -1,0 +1,7 @@
+﻿
+
+@using (Html.BeginForm("ClearToken", "KIOSKs", FormMethod.Post))
+{
+    <input type="hidden" name="password" value="@ViewBag.APIPassword" />
+    <input type="submit" class="btn btn-outline-danger" value="Delete all tokens"/>
+}
