@@ -918,6 +918,11 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="checkKH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cmnd" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="KhachHangMoi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="MaKHMoi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ChiTietQC_DELETE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SoHD" Type="int" Mode="In" />
           <Parameter Name="MaKO" Type="varchar" Mode="In" />
@@ -930,6 +935,9 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
           <Parameter Name="NgayBDQC" Type="date" Mode="In" />
           <Parameter Name="NgayKTQC" Type="date" Mode="In" />
         </Function>
+        <Function Name="sp_ChucNangTheoLoaiNhom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maln" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_CONFIG_DELETE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="variable_name" Type="varchar" Mode="In" />
         </Function>
@@ -940,6 +948,13 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
         <Function Name="sp_CONFIG_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="variable_name" Type="varchar" Mode="In" />
           <Parameter Name="value" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_KhachHang_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CMND" Type="varchar" Mode="In" />
+          <Parameter Name="TenKH" Type="nvarchar" Mode="In" />
+          <Parameter Name="DiaChi" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="SDT" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_KIOSK_DELETE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MaKO" Type="varchar" Mode="In" />
@@ -966,6 +981,11 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
           <Parameter Name="ImageBanner" Type="varchar" Mode="In" />
           <Parameter Name="ConnectStr" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_PhanQuyen_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaTK" Type="int" Mode="In" />
+          <Parameter Name="MaCN" Type="int" Mode="In" />
+          <Parameter Name="TinhTrang" Type="bit" Mode="In" />
+        </Function>
         <Function Name="sp_QuangCao_DELETE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MaQC" Type="int" Mode="In" />
         </Function>
@@ -980,6 +1000,25 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
           <Parameter Name="HinhAnh" Type="varchar" Mode="In" />
           <Parameter Name="ThoiLuong" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_TaiKhoan_ChangePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="matk" Type="int" Mode="In" />
+          <Parameter Name="oldhashedpassword" Type="varchar" Mode="In" />
+          <Parameter Name="newhashedpassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TaiKhoan_Disable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaTK" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_TaiKhoan_Enable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaTK" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_TaiKhoan_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="TrangThai" Type="bit" Mode="In" />
+          <Parameter Name="MaKH" Type="int" Mode="In" />
+          <Parameter Name="SoHD" Type="int" Mode="In" />
+        </Function>
+        <Function Name="TKMoi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QLKIOSKModelStoreContainer">
           <EntitySet Name="BuoiAn" EntityType="Self.BuoiAn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTiet_TinhTrangKO" EntityType="Self.ChiTiet_TinhTrangKO" Schema="dbo" store:Type="Tables" />
@@ -2454,6 +2493,44 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
             <Parameter Name="NgayKTQC" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="V_ChiTietQC" EntityType="QLKIOSKModel.V_ChiTietQC" />
+          <FunctionImport Name="sp_TaiKhoan_Disable">
+          <Parameter Name="MaTK" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TaiKhoan_Enable">
+          <Parameter Name="MaTK" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TaiKhoan_INSERT">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="TrangThai" Mode="In" Type="Boolean" />
+            <Parameter Name="MaKH" Mode="In" Type="Int32" />
+            <Parameter Name="SoHD" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MaKHMoi" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="sp_KhachHang_INSERT">
+            <Parameter Name="CMND" Mode="In" Type="String" />
+            <Parameter Name="TenKH" Mode="In" Type="String" />
+            <Parameter Name="DiaChi" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="SDT" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="checkKH" ReturnType="Collection(QLKIOSKModel.checkKH_Result)">
+          <Parameter Name="cmnd" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PhanQuyen_INSERT">
+            <Parameter Name="MaTK" Mode="In" Type="Int32" />
+            <Parameter Name="MaCN" Mode="In" Type="Int32" />
+            <Parameter Name="TinhTrang" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TaiKhoan_ChangePassword">
+            <Parameter Name="matk" Mode="In" Type="Int32" />
+            <Parameter Name="oldhashedpassword" Mode="In" Type="String" />
+            <Parameter Name="newhashedpassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ChucNangTheoLoaiNhom" ReturnType="Collection(Int32)">
+          <Parameter Name="maln" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="TKMoi" ReturnType="Collection(Int32)" />
         </EntityContainer>
         <EntityType Name="V_ChiTietQC">
           <Key>
@@ -2470,6 +2547,15 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
           <Property Name="NgayKTQC" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="TrangThaiPV" Type="Boolean" />
         </EntityType>
+        <ComplexType Name="checkKH_Result">
+          <Property Type="Int32" Name="MaKH" Nullable="false" />
+          <Property Type="String" Name="CMND" Nullable="true" MaxLength="13" />
+          <Property Type="String" Name="TenKH" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DiaChi" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SDT" Nullable="true" MaxLength="10" />
+          <Property Type="Boolean" Name="TrangThaiPV" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2917,6 +3003,28 @@ warning 6002: The table/view 'QLKIOSK.dbo.V_QuangCao' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_TaiKhoan_Disable" FunctionName="QLKIOSKModel.Store.sp_TaiKhoan_Disable" />
+          <FunctionImportMapping FunctionImportName="sp_TaiKhoan_Enable" FunctionName="QLKIOSKModel.Store.sp_TaiKhoan_Enable" />
+          <FunctionImportMapping FunctionImportName="sp_TaiKhoan_INSERT" FunctionName="QLKIOSKModel.Store.sp_TaiKhoan_INSERT" />
+          <FunctionImportMapping FunctionImportName="MaKHMoi" FunctionName="QLKIOSKModel.Store.MaKHMoi" />
+          <FunctionImportMapping FunctionImportName="sp_KhachHang_INSERT" FunctionName="QLKIOSKModel.Store.sp_KhachHang_INSERT" />
+          <FunctionImportMapping FunctionImportName="checkKH" FunctionName="QLKIOSKModel.Store.checkKH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLKIOSKModel.checkKH_Result">
+                <ScalarProperty Name="MaKH" ColumnName="MaKH" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="TenKH" ColumnName="TenKH" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="TrangThaiPV" ColumnName="TrangThaiPV" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_PhanQuyen_INSERT" FunctionName="QLKIOSKModel.Store.sp_PhanQuyen_INSERT" />
+          <FunctionImportMapping FunctionImportName="sp_TaiKhoan_ChangePassword" FunctionName="QLKIOSKModel.Store.sp_TaiKhoan_ChangePassword" />
+          <FunctionImportMapping FunctionImportName="sp_ChucNangTheoLoaiNhom" FunctionName="QLKIOSKModel.Store.sp_ChucNangTheoLoaiNhom" />
+          <FunctionImportMapping FunctionImportName="TKMoi" FunctionName="QLKIOSKModel.Store.TKMoi" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

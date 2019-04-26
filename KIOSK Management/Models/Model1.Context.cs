@@ -279,5 +279,135 @@ namespace KIOSK_Management.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ChiTietQC_INSERT", soHDParameter, maKOParameter, maQCParameter, ngayBDQCParameter, ngayKTQCParameter);
         }
+    
+        public virtual int sp_TaiKhoan_Disable(Nullable<int> maTK)
+        {
+            var maTKParameter = maTK.HasValue ?
+                new ObjectParameter("MaTK", maTK) :
+                new ObjectParameter("MaTK", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaiKhoan_Disable", maTKParameter);
+        }
+    
+        public virtual int sp_TaiKhoan_Enable(Nullable<int> maTK)
+        {
+            var maTKParameter = maTK.HasValue ?
+                new ObjectParameter("MaTK", maTK) :
+                new ObjectParameter("MaTK", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaiKhoan_Enable", maTKParameter);
+        }
+    
+        public virtual int sp_TaiKhoan_INSERT(string username, string password, Nullable<bool> trangThai, Nullable<int> maKH, Nullable<int> soHD)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var trangThaiParameter = trangThai.HasValue ?
+                new ObjectParameter("TrangThai", trangThai) :
+                new ObjectParameter("TrangThai", typeof(bool));
+    
+            var maKHParameter = maKH.HasValue ?
+                new ObjectParameter("MaKH", maKH) :
+                new ObjectParameter("MaKH", typeof(int));
+    
+            var soHDParameter = soHD.HasValue ?
+                new ObjectParameter("SoHD", soHD) :
+                new ObjectParameter("SoHD", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaiKhoan_INSERT", usernameParameter, passwordParameter, trangThaiParameter, maKHParameter, soHDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> MaKHMoi()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("MaKHMoi");
+        }
+    
+        public virtual int sp_KhachHang_INSERT(string cMND, string tenKH, string diaChi, string email, string sDT)
+        {
+            var cMNDParameter = cMND != null ?
+                new ObjectParameter("CMND", cMND) :
+                new ObjectParameter("CMND", typeof(string));
+    
+            var tenKHParameter = tenKH != null ?
+                new ObjectParameter("TenKH", tenKH) :
+                new ObjectParameter("TenKH", typeof(string));
+    
+            var diaChiParameter = diaChi != null ?
+                new ObjectParameter("DiaChi", diaChi) :
+                new ObjectParameter("DiaChi", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var sDTParameter = sDT != null ?
+                new ObjectParameter("SDT", sDT) :
+                new ObjectParameter("SDT", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_KhachHang_INSERT", cMNDParameter, tenKHParameter, diaChiParameter, emailParameter, sDTParameter);
+        }
+    
+        public virtual ObjectResult<checkKH_Result> checkKH(string cmnd)
+        {
+            var cmndParameter = cmnd != null ?
+                new ObjectParameter("cmnd", cmnd) :
+                new ObjectParameter("cmnd", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<checkKH_Result>("checkKH", cmndParameter);
+        }
+    
+        public virtual int sp_PhanQuyen_INSERT(Nullable<int> maTK, Nullable<int> maCN, Nullable<bool> tinhTrang)
+        {
+            var maTKParameter = maTK.HasValue ?
+                new ObjectParameter("MaTK", maTK) :
+                new ObjectParameter("MaTK", typeof(int));
+    
+            var maCNParameter = maCN.HasValue ?
+                new ObjectParameter("MaCN", maCN) :
+                new ObjectParameter("MaCN", typeof(int));
+    
+            var tinhTrangParameter = tinhTrang.HasValue ?
+                new ObjectParameter("TinhTrang", tinhTrang) :
+                new ObjectParameter("TinhTrang", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PhanQuyen_INSERT", maTKParameter, maCNParameter, tinhTrangParameter);
+        }
+    
+        public virtual int sp_TaiKhoan_ChangePassword(Nullable<int> matk, string oldhashedpassword, string newhashedpassword)
+        {
+            var matkParameter = matk.HasValue ?
+                new ObjectParameter("matk", matk) :
+                new ObjectParameter("matk", typeof(int));
+    
+            var oldhashedpasswordParameter = oldhashedpassword != null ?
+                new ObjectParameter("oldhashedpassword", oldhashedpassword) :
+                new ObjectParameter("oldhashedpassword", typeof(string));
+    
+            var newhashedpasswordParameter = newhashedpassword != null ?
+                new ObjectParameter("newhashedpassword", newhashedpassword) :
+                new ObjectParameter("newhashedpassword", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_TaiKhoan_ChangePassword", matkParameter, oldhashedpasswordParameter, newhashedpasswordParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> sp_ChucNangTheoLoaiNhom(Nullable<int> maln)
+        {
+            var malnParameter = maln.HasValue ?
+                new ObjectParameter("maln", maln) :
+                new ObjectParameter("maln", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_ChucNangTheoLoaiNhom", malnParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> TKMoi()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("TKMoi");
+        }
     }
 }

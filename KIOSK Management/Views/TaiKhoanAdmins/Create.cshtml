@@ -1,0 +1,198 @@
+﻿@model KIOSK_Management.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>TaiKhoan</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="text" id="CMND" name="CMND" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <div id="Kiemtra" class="btn btn-primary">Check</div>
+            </div>
+        </div>
+
+
+        <div id="TTKH">
+
+        </div>
+
+        <div id="NewAccount">
+            <div class="form-group">
+                <label for=" LoaiNhom" class="control-label col-md-2">LoaiNhom</label>
+                <div class="col-md-10">
+                    @Html.Action("_DropDown_LoaiNhom")
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" id="Username" name="Username" maxlength="50" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="password" id="Password" name="Password" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="RetypePassword" class="control-label col-md-2">Retype password</label>
+                <div class="col-md-10">
+                    <input type="password" id="RetypePassword" name="RetypePassword" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <input type="checkbox" id="TrangThai" name="TrangThai" class="form-check" value="true" style="display:inline-block" />
+                        <label for="TrangThai">Enable</label>
+                        @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="btnSubmit" value="Create" class="btn btn-outline-success" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('#Username').prop('disabled', true);
+            $('#Password').prop('disabled', true);
+            $('#RetypePassword').prop('disabled', true);
+            $('#Username').prop('required', false);
+            $('#Password').prop('required', false);
+            $('#RetypePassword').prop('required', false);
+            $('#btnSubmit').prop('disabled', true);
+
+            $('#NewAccount').hide();
+        });
+
+        function ValidatePassword() {
+            var password = $("#Password").val();
+            var repassword = $("#RetypePassword").val();
+
+            if (password != repassword) {
+                $("#btnSubmit").prop('disabled', true);
+
+                $("#Password").removeClass("alert-success");
+                $("#RetypePassword").removeClass("alert-success");
+
+                $("#Password").addClass("alert-danger");
+                $("#RetypePassword").addClass("alert-danger");
+            }
+            else {
+                $("#btnSubmit").prop('disabled', false);
+                $("#Password").removeClass("alert-danger");
+                $("#RetypePassword").removeClass("alert-danger");
+
+                $("#Password").addClass("alert-success");
+                $("#RetypePassword").addClass("alert-success");
+            }
+        }
+
+        $("#Password").change(function () {
+            ValidatePassword();
+        });
+
+        $("#RetypePassword").change(function () {
+            ValidatePassword();
+        });
+
+        $("#Kiemtra").click(function () {
+            var cmnd = $('#CMND').val();
+            $.ajax({
+                type: 'GET',
+                data: { cmnd: cmnd },
+                url: 'CheckKhachHang',
+                datatype: 'JSON',
+                contentType: "application/JSON",
+                success: function (result) {
+
+                    if (result == 0) {
+                        //New Account
+                        $("#TTKH").empty();
+                        var div_data = '<div class="form-group"><label class="control-label col-md-2">Họ và tên:</label><div class="col-md-10"><input class="form-control" type="text" name="TenKH" required="" /></div></div>';
+                        var div_data1 = '<div class="form-group"><label class="control-label col-md-2">Số CMND:</label><div class="col-md-10"><input class="form-control" type="number" name="CMND" maxlength="10" placeholder="281185917" required="" /></div></div>';
+                        var div_data2 = '<div class="form-group"><label class="control-label col-md-2">Địa Chỉ:</label><div class="col-md-10"><input class="form-control" type="text" name="DiaChi" placeholder="475A, p.25, Quận Bình Thành" required="" /></div></div>';
+                        var div_data3 = '<div class="form-group"><label class="control-label col-md-2">Email:</label><div class="col-md-10"><input class="form-control" type="email" name="Email" placeholder="HaiVipPro@gmail.com" required="" /></div></div>';
+                        var div_data4 = '<div class="form-group"><label class="control-label col-md-2">Số Điện Thoại:</label><div class="col-md-10"><input class="form-control" type="number" name="SDT" required="" /></div></div>';
+                        var div = div_data + div_data1 + div_data2 + div_data3 + div_data4;
+                        $(div).appendTo("#TTKH");
+                        var div_data6 = '<label class="control-label col-md-2">UserName:</label><div class=" col-md-3"><input class="form-control" name="username" type="text"  /></div><label class="control-label col-md-1">PassWord:</label><div class=" col-md-3">  <input class="form-control col-md-2" type="password" name="pass" /></div> ';
+                        $(div_data6).appendTo("#userpass");
+                        $('#Username').prop('disabled', false);
+                        $('#Password').prop('disabled', false);
+                        $('#RetypePassword').prop('disabled', false);
+                        $('#Username').prop('required', true);
+                        $('#Password').prop('required', true);
+                        $('#RetypePassword').prop('required', true);
+
+                        $('#NewAccount').show(); 
+                    }
+                    else {
+                        $("#TTKH").empty();
+                        for (var i = 0; i < result.length; i++) {
+                            var div_data = '<div class="form-group"><label class="control-label col-md-2">Họ và tên:</label><div class="col-md-10"><input class="form-control" type="text" name="TenKH" readonly="" value="' + result[i].TenKH + '"  /></div></div>';
+                            var div_data1 = '<div class="form-group"><label class="control-label col-md-2">Số CMND:</label><div class="col-md-10"><input class="form-control" type="number" name="CMND" readonly="" maxlength="10" value="' + result[i].CMND + '"  /></div></div>';
+                            var div_data2 = '<div class="form-group"><label class="control-label col-md-2">Địa Chỉ:</label><div class="col-md-10"><input class="form-control" type="text" name="DiaChi" readonly="" value="' + result[i].DiaChi + '" /></div></div>';
+                            var div_data3 = '<div class="form-group"><label class="control-label col-md-2">Email:</label><div class="col-md-10"><input class="form-control" type="email" name="Email" readonly="" value="' + result[i].Email + '" /></div></div>';
+                            var div_data4 = '<div class="form-group"><label class="control-label col-md-2">Số Điện Thoại:</label><div class="col-md-10"><input class="form-control" type="number" name="SDT" readonly="" value="' + result[i].SDT + '" /></div></div>';
+                            var div = div_data + div_data1 + div_data2 + div_data3 + div_data4;
+                            $(div).appendTo("#TTKH");
+                            $('#Username').prop('disabled', true);
+                            $('#Password').prop('disabled', true);
+                            $('#RetypePassword').prop('disabled', true);
+                            $('#Username').prop('required', false);
+                            $('#Password').prop('required', false);
+                            $('#RetypePassword').prop('required', false);
+                            $('#btnSubmit').prop('disabled', true);
+
+
+                        }
+                        $('#NewAccount').hide();
+                    }
+
+                }
+            });
+        });
+        $("#cmndcheck").change(function () {
+            $("#userpass").empty();
+        });
+    </script>
+}

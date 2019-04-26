@@ -184,6 +184,7 @@
     <Compile Include="Controllers\KIOSKsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuangCaosController.cs" />
+    <Compile Include="Controllers\TaiKhoanAdminsController.cs" />
     <Compile Include="Controllers\Utility.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -191,6 +192,9 @@
     <Compile Include="KIOSKAPI_Web.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BuoiAn.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\checkKH_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietGiamGiaTheoSL.cs">
@@ -451,6 +455,9 @@
     <Content Include="Views\ChiTietQCs\_QuangCaoRow.cshtml" />
     <Content Include="Views\KIOSKs\ClearToken.cshtml" />
     <Content Include="Views\KIOSKs\_ClearToken.cshtml" />
+    <Content Include="Views\TaiKhoanAdmins\_DropDown_LoaiNhom.cshtml" />
+    <Content Include="Views\TaiKhoanAdmins\Create.cshtml" />
+    <Content Include="Views\TaiKhoanAdmins\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
