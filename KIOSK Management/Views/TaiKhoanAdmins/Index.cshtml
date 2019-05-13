@@ -1,75 +1,45 @@
-﻿@model IEnumerable<KIOSK_Management.Models.TaiKhoan>
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<KIOSK_Management.Models.V_TaiKhoanAdmin>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách tài khoản admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Danh sách tài khoản</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayTao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GioTao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrangThai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoHD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaKH)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayTao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioTao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrangThai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoHD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaKH)
-        </td>
-        <td>
-            @if (item.TrangThai == true)
-            {
-                @Html.ActionLink("Disable", "Disable", new { matk = item.MaTK }, new { @class = "btn btn-outline-warning" })
-            }
-            else
-            {
-                @Html.ActionLink("Enable", "Enable", new { matk = item.MaTK }, new { @class = "btn btn-outline-warning" })
-            }
-        </td>
-    </tr>
+@Html.Action("_DropDown_LoaiNhom")
+
+<div id="accounts">    
+    @*Load AJAX*@
+</div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            LoadAccounts();
+        });
+
+        function LoadAccounts() {
+            var maln = $("#LoaiNhom").val();
+            $("#accounts").load("/TaiKhoanAdmins/_GetAccountsByLoaiNhom?maln=" + maln, function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success")
+                    null;
+                    //alert("External content loaded successfully!");
+                if (statusTxt == "error")
+                    null;
+                    //alert("Error: " + xhr.status + ": " + xhr.statusText);
+            });
+        }
+
+        $("#LoaiNhom").change(function () {
+            LoadAccounts();
+        });
+    </script>
 }
-
-</table>

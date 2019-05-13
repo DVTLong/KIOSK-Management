@@ -1,0 +1,66 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<KIOSK_Management.Models.sp_GetAccountsByMaLN_Result>
+
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            Ngày giờ tạo
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Số hợp đồng
+        </th>
+        <th>
+            Mã khách hàng
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @string.Format("{0:dd-MMM-yyyy} {1}:{2}:{3}", item.NgayTao, item.GioTao.Hours, item.GioTao.Minutes, item.GioTao.Seconds)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaKH)
+            </td>
+            <td>
+                @if (item.TrangThai == true)
+                {
+                    @Html.ActionLink("Disable", "Disable", new { matk = item.MaTK }, new { @class = "btn btn-outline-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Enable", "Enable", new { matk = item.MaTK }, new { @class = "btn btn-outline-success" })
+                }
+                @Html.ActionLink("Permissions", "Edit", "PhanQuyenAdmins", new { matk = item.MaTK }, new { @class = "btn btn-outline-primary" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("_GetAccountsByLoaiNhom", new { page, maln = Request.Params["maln"].ToString() }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions(){  HttpMethod = "GET", UpdateTargetId = "accounts"}))

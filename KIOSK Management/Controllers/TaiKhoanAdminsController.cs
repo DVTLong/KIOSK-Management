@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using KIOSK_Management.Models;
+using PagedList;
 
 namespace KIOSK_Management.Controllers
 {
@@ -16,10 +17,24 @@ namespace KIOSK_Management.Controllers
         private QLKIOSKEntities db = new QLKIOSKEntities();
 
         // GET: TaiKhoans
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var taiKhoans = db.TaiKhoans.Include(t => t.HopDong).Include(t => t.KhachHang);
-            return View(taiKhoans.ToList());
+            Config cf_pagesize = db.Configs.SingleOrDefault(x => x.variable_name.Equals("taikhoanadmins_index_pagesize"));
+            int pagenum = page ?? 1;
+            int pagesize = cf_pagesize == null ? 5 : Convert.ToInt32(cf_pagesize.value);
+            var taiKhoans = db.V_TaiKhoanAdmin.ToList();
+            return View(taiKhoans.ToPagedList(pagenum, pagesize));
+        }
+
+        public ActionResult _GetAccountsByLoaiNhom(int maln, int? page)
+        {
+            Config cf_pagesize = db.Configs.SingleOrDefault(x => x.variable_name.Equals("taikhoanadmins_index_pagesize"));
+            int pagenum = page ?? 1;
+            int pagesize = cf_pagesize == null ? 5 : Convert.ToInt32(cf_pagesize.value);
+
+            
+            List<sp_GetAccountsByMaLN_Result> taiKhoans = db.sp_GetAccountsByMaLN(maln).ToList();
+            return PartialView(taiKhoans.ToPagedList(pagenum, pagesize));
         }
 
         // GET: TaiKhoans/Create
@@ -79,7 +94,7 @@ namespace KIOSK_Management.Controllers
                     {
                         foreach (int macn in macns)
                         {
-                            db.sp_PhanQuyen_INSERT(matk, macn, true);
+                            db.sp_PhanQuyen_INSERT(matk, macn, false);
                         }
                         
                     }

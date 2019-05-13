@@ -1,9 +1,13 @@
 ﻿@model KIOSK_Management.Models.ChiTietThueKIOSKQC
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm chi tiết QC";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-secondary" })
+</div>
 
 <h2>Create</h2>
 
@@ -58,15 +62,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-outline-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

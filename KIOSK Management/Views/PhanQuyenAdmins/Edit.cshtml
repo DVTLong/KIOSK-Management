@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Phân quyền";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using KIOSK_Management.Models
+@model List<PhanQuyen>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "TaiKhoanAdmins", null, new { @class = "btn btn-outline-secondary" })
+
+
+</div>
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="MaTK" value="@ViewBag.MaTK" />
+
+    <table class="table table-responsive table-sm">
+        <thead>
+            <tr>
+                <th>Enable/Disable</th>
+                <th>Tên quyền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PhanQuyen item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.TinhTrang == true)
+                        {
+                            <input type="checkbox" id="@item.MaCN" name="@item.MaCN" value="true" class="form-check" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="@item.MaCN" name="@item.MaCN" value="true" class="form-check" />
+                        }
+                    </td>
+                    <td>
+                        <label for="@item.MaCN" class="control-label">@item.ChucNang.TenCN</label>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="btnSubmit" value="Save" class="btn btn-outline-success" />
+        </div>
+    </div>
+
+}
+

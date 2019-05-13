@@ -1,34 +1,34 @@
 ﻿@model IEnumerable<KIOSK_Management.Models.Config>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cài đặt";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Cài đặt</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>variable_name</th>
-        <th>value</th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @item.variable_name
-    </td>
-    <td>
-        @item.value
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.variable_name })
-    </td>
-</tr>
-}
-
+<table class="table table-responsive-sm table-hover">
+    <thead>
+        <tr>
+            <th>variable_name</th>
+            <th>value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.variable_name
+                </td>
+                <td>
+                    @item.value
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.variable_name }, new { @class = "btn btn-outline-warning" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

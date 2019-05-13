@@ -50,38 +50,53 @@ namespace KIOSK_Management.Controllers
 
             if (Utility.StringIsInvalid(mako) || mako.Length > 18)
             {
-                ViewBag.validate_mako = "MaKO is invalid";
+                ViewBag.Validate_MaKO = "Mã KIOSK không hợp lệ";
                 return View(kIOSK);
             }
             if (tenko != null && (Utility.StringIsInvalid(tenko) || tenko.Length > 100))
             {
-                ViewBag.validate_tenko = "TenKO is invalid";
+                ViewBag.Validate_TenKO = "Tên KIOSK không hợp lệ";
                 return View(kIOSK);
+            }
+            if ((kIOSK.NgayXD != null && kIOSK.NgayVH == null) || (kIOSK.NgayXD == null && kIOSK.NgayVH != null))
+            {
+                ViewBag.Validate_Ngay = "Ngày xây dựng, ngày vận hành không hợp lệ";
+            }
+            if (kIOSK.NgayXD != null && kIOSK.NgayVH != null && kIOSK.NgayXD > kIOSK.NgayVH)
+            {
+                ViewBag.Validate_Ngay = "Ngày xây dựng phải <= ngày vận hành";
             }
             if (diadiem != null && (Utility.StringIsInvalid(diadiem) || diadiem.Length > 100))
             {
-                ViewBag.validate_diadiem = "DiaDiem is invalid";
+                ViewBag.Validate_DiaDiem = "Địa điểm không hợp lệ";
                 return View(kIOSK);
             }
             if (connectstr != null && (Utility.StringIsInvalid(connectstr) || connectstr.Length > 200))
             {
-                ViewBag.validate_connectstr = "ConnectStr is invalid";
+                ViewBag.Validate_ConnectStr = "Connect string không hợp lệ";
                 return View(kIOSK);
-            }
+            }            
 
 
             string filename = string.Empty;
             if (fImageBanner != null)
             {
-                string extension = fImageBanner.ContentType.Split('/')[1];
-                filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
-                string targetFolder = Server.MapPath("~/Images/KIOSK");
-                string targetPath = Path.Combine(targetFolder, filename);
-                fImageBanner.SaveAs(targetPath);
-                //Save file if not exists
-                if (!System.IO.File.Exists(targetPath))
+                try
                 {
+                    string extension = fImageBanner.ContentType.Split('/')[1];
+                    filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
+                    string targetFolder = Server.MapPath("~/Images/KIOSK");
+                    string targetPath = Path.Combine(targetFolder, filename);
                     fImageBanner.SaveAs(targetPath);
+                    //Save file if not exists
+                    if (!System.IO.File.Exists(targetPath))
+                    {
+                        fImageBanner.SaveAs(targetPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.ToString());
                 }
             }
             else
@@ -135,37 +150,52 @@ namespace KIOSK_Management.Controllers
 
             if (Utility.StringIsInvalid(mako) || mako.Length > 18)
             {
-                ViewBag.validate_mako = "MaKO is invalid";
+                ViewBag.validate_mako = "Mã KIOSK không hợp lệ";
                 return View(kIOSK);
             }
             if (tenko != null && (Utility.StringIsInvalid(tenko) || tenko.Length > 100))
             {
-                ViewBag.validate_tenko = "TenKO is invalid";
+                ViewBag.validate_tenko = "Tên KIOSK không hợp lệ";
                 return View(kIOSK);
+            }
+            if ((kIOSK.NgayXD != null && kIOSK.NgayVH == null) || (kIOSK.NgayXD == null && kIOSK.NgayVH != null))
+            {
+                ViewBag.Validate_Ngay = "Ngày xây dựng, ngày vận hành không hợp lệ";
+            }
+            if (kIOSK.NgayXD != null && kIOSK.NgayVH != null && kIOSK.NgayXD > kIOSK.NgayVH)
+            {
+                ViewBag.Validate_Ngay = "Ngày xây dựng phải <= ngày vận hành";
             }
             if (diadiem != null && (Utility.StringIsInvalid(diadiem) || diadiem.Length > 100))
             {
-                ViewBag.validate_diadiem = "DiaDiem is invalid";
+                ViewBag.Validate_DiaDiem = "Địa điểm không hợp lệ";
                 return View(kIOSK);
             }
             if (connectstr != null && (Utility.StringIsInvalid(connectstr) || connectstr.Length > 200))
             {
-                ViewBag.validate_connectstr = "ConnectStr is invalid";
+                ViewBag.Validate_ConnectStr = "Connect string không hợp lệ";
                 return View(kIOSK);
             }
 
             string filename = string.Empty;
             if (fImageBanner != null)
             {
-                string extension = fImageBanner.ContentType.Split('/')[1];
-                filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
-                string targetFolder = Server.MapPath("~/Images/KIOSK");
-                string targetPath = Path.Combine(targetFolder, filename);
-                fImageBanner.SaveAs(targetPath);
-                //Save file if not exists
-                if (!System.IO.File.Exists(targetPath))
+                try
                 {
+                    string extension = fImageBanner.ContentType.Split('/')[1];
+                    filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
+                    string targetFolder = Server.MapPath("~/Images/KIOSK");
+                    string targetPath = Path.Combine(targetFolder, filename);
                     fImageBanner.SaveAs(targetPath);
+                    //Save file if not exists
+                    if (!System.IO.File.Exists(targetPath))
+                    {
+                        fImageBanner.SaveAs(targetPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.ToString());
                 }
             }
             else

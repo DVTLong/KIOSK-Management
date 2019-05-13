@@ -130,12 +130,6 @@ namespace KIOSK_Management.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult _DropDown_KIOSK(int sohd)
-        {
-            List<ChiTietThueKIOSKQC> list = db.ChiTietThueKIOSKQCs.Include(x=>x.KIOSK).Where(x=>x.SoHD == sohd).ToList();
-            return PartialView(list);
-        }
-
         public ActionResult _QuangCaoRow()
         {
             List<QuangCao> list = db.QuangCaos.ToList();

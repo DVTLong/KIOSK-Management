@@ -5,48 +5,51 @@
 @{
                 /**/
 
-                ViewBag.Title = "Index";
+                ViewBag.Title = "Danh sách quảng cáo";
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Danh sách quảng cáo</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            Nội dung
-        </th>
-        <th>
-            Hình ảnh
-        </th>
-        <th>
-            Thời lượng (giây)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-responsive-sm table-hover">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HinhAnh)
-                <img class="img-responsive" src="~/Images/QuangCao/@item.HinhAnh" alt="@item.HinhAnh" style="max-width:200px;">
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiLuong)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaQC }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaQC })
-            </td>
+            <th>
+                Nội dung
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            <th>
+                Thời lượng
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoiDung)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HinhAnh)
+                    <img class="img-responsive" src="~/Images/QuangCao/@item.HinhAnh" alt="@item.HinhAnh" style="max-width:200px;">
+                </td>
+                <td>
+                    @string.Format("{0:}", TimeSpan.FromSeconds(item.ThoiLuong))
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaQC }, new { @class = "btn btn-outline-warning" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MaQC }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

@@ -1,9 +1,13 @@
 ﻿@model KIOSK_Management.Models.QuangCao
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Sửa TT quảng cáo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-secondary" })
+    </div>
 
 <h2>Edit</h2>
 
@@ -12,51 +16,62 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>QuangCao</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MaQC)
+<div class="form-horizontal">
+    <h4>Quảng cáo</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.MaQC)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="text" name="NoiDung" class="form-control" maxlength="200" value="@Model.NoiDung" />
-                @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        <label class="col-md-2">Nội dung</label>
+        <div class="col-md-10">
+            <input type="text" name="NoiDung" class="form-control" maxlength="200" value="@Model.NoiDung" />
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HinhAnh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="text" id="HinhAnh" name="HinhAnh" class="form-control" readonly value="@Model.HinhAnh" />
-                <img class="img-responsive" src="~/Images/QuangCao/@Model.HinhAnh" alt="@Model.HinhAnh" style="display:block; max-width:300px">
-                <div id="btnClearImage" class="btn btn-outline-secondary form-control" style="max-width:280px;">Clear</div>
-                <input type="file" name="HinhAnh" class="form-control-file" />
-                @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
-
+        @if (ViewBag.Validate_NoiDung != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Validate_NoiDung
             </div>
-        </div>
+        }
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThoiLuong, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="number" min="0" step="1" name="ThoiLuong" class="form-control" style="display:inline-block" required value="@Model.ThoiLuong" /> giây
-                @Html.ValidationMessageFor(model => model.ThoiLuong, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <label class="col-md-2">Hình ảnh hiện tại</label>
+        <div class="col-md-10">
+            <div id="btnClearImage" class="btn btn-outline-secondary form-control" style="max-width:280px;">Clear</div>
+            <input type="text" id="HinhAnh" name="HinhAnh" class="form-control" readonly value="@Model.HinhAnh" />
+            <img class="img-responsive" id="imgNow" src="~/Images/QuangCao/@Model.HinhAnh" alt="@Model.HinhAnh" style="display:block; max-width:300px">
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="form-group">
+        <label class="col-md-2">Hình ảnh mới</label>
+        <div class="col-md-10">
+            <input type="file" name="HinhAnh" class="form-control-file" onchange="previewFile()" />
+            <img src="" id="preview" height="200" alt="Image preview...">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2">Thời lượng</label>
+        <div class="col-md-10">
+            <input type="number" min="0" step="1" name="ThoiLuong" class="form-control" style="display:inline-block" required value="@Model.ThoiLuong" /> giây
+            @if (ViewBag.Validate_ThoiLuong != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Validate_ThoiLuong
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-outline-warning" />
+        </div>
+    </div>
 </div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -65,7 +80,25 @@
         $(document).ready(function () {
             $("#btnClearImage").click(function () {
                 $("#HinhAnh").val(null);
+                $("#imgNow").prop("src", null);
+                $("#imgNow").prop("alt", "");
             });
         });
+
+        function previewFile() {
+            var preview = document.querySelector('#preview');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+            }
+        }
     </script>
 }

@@ -1,7 +1,7 @@
 ﻿@using KIOSK_Management.Models
 @model List<LoaiNhom>
 
-    <select name="LoaiNhom" class="form-control">
+    <select id="LoaiNhom" name="LoaiNhom" class="form-control">
         @for (int i = 0; i < Model.Count; i++)
         {
             if (i == 0)

@@ -1,0 +1,147 @@
+﻿@model KIOSK_Management.Models.KhachHang
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-secondary" })
+</div>
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Khách hàng</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MaKH)
+
+        <div class="form-group">
+            <label class="col-md-2">CMND</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CMND, new { htmlAttributes = new { @class = "form-control", maxlength = "13", required = "", id="cmnd" } })
+                <p class="text-danger" id="validate_cmnd"></p>
+                @if (ViewBag.Validate_CMND != null)
+                {
+                    <p class="text-danger">@ViewBag.Validate_CMND</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2">TenKH</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+                @if (ViewBag.Validate_TenKH != null)
+                {
+                    <p class="text-danger">@ViewBag.Validate_TenKH</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2">DiaChi</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", maxlength = "150" } })
+                @if (ViewBag.Validate_DiaChi != null)
+                {
+                    <p class="text-danger">@ViewBag.Validate_DiaChi</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2">Email</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type="email", maxlength = "50" } })
+                @if (ViewBag.Validate_Email != null)
+                {
+                    <p class="text-danger">@ViewBag.Validate_Email</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2">SDT</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", maxlength = "10", id="sdt" } })
+                <p class="text-danger" id="validate_sdt"></p>
+                @if (ViewBag.Validate_SDT != null)
+                {
+                    <p class="text-danger">@ViewBag.Validate_SDT</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnSubmit" value="Save" class="btn btn-outline-warning" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            CheckCMND();
+            CheckSDT();
+
+            $('#cmnd').change(function () {
+                CheckCMND();
+            });
+
+            $('#sdt').change(function () {
+                CheckSDT();
+            });
+        });
+
+        function CheckCMND() {
+            if (!Validate_StringIsCMND()) {
+                    $('#validate_cmnd').html('Invalid');
+                    ToggleSubmit(true);
+                }
+                else {
+                    $('#validate_cmnd').html('');
+                    ToggleSubmit(false);
+                }
+        }
+
+        function CheckSDT() {
+            if (!Validate_StringIsSDT()) {
+                    $('#validate_sdt').html('Invalid');
+                    ToggleSubmit(true);
+                }
+                else {
+                    $('#validate_sdt').html('');
+                    ToggleSubmit(false);
+                }
+        }
+
+        function Validate_StringIsCMND() {
+            var pattern = /^(\d{8}|\d{12})$/;
+            var cmnd = $('#cmnd').val();
+            return pattern.test(cmnd);
+        }
+
+        function Validate_StringIsSDT() {
+            var pattern = /070\d{7}|079\d{7}|077\d{7}|076\d{7}|078\d{7}|089\d{7}|090\d{7}|093\d{7}|083\d{7}|084\d{7}|085\d{7}|081\d{7}|082\d{7}|088\d{7}|091\d{7}|094\d{7}|032\d{7}|033\d{7}|034\d{7}|035\d{7}|036\d{7}|037\d{7}|038\d{7}|039\d{7}|086\d{7}|096\d{7}|097\d{7}|098\d{7}|056\d{7}|058\d{7}|092\d{7}|059\d{7}|099\d{7}/;
+            var sdt = $('#sdt').val();
+            return pattern.test(sdt);
+        }
+
+        function ToggleSubmit(isDisabled) {
+            $('#btnSubmit').prop('disabled', isDisabled);
+        }
+
+    </script>
+}

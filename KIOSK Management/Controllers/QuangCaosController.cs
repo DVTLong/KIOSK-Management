@@ -59,17 +59,22 @@ namespace KIOSK_Management.Controllers
             string filename = string.Empty;
             if (HinhAnh != null)
             {
-                //Create folder if not exists
-                //Directory.CreateDirectory("~/Images");
-                string extension = HinhAnh.ContentType.Split('/')[1];
-                filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
-                string targetFolder = Server.MapPath("~/Images/QuangCao");
-                string targetPath = Path.Combine(targetFolder, filename);
-                HinhAnh.SaveAs(targetPath);
-                //Save file if not exists
-                if (!System.IO.File.Exists(targetPath))
+                try
                 {
+                    string extension = HinhAnh.ContentType.Split('/')[1];
+                    filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
+                    string targetFolder = Server.MapPath("~/Images/QuangCao");
+                    string targetPath = Path.Combine(targetFolder, filename);
                     HinhAnh.SaveAs(targetPath);
+                    //Save file if not exists
+                    if (!System.IO.File.Exists(targetPath))
+                    {
+                        HinhAnh.SaveAs(targetPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.ToString());
                 }
             }
             else
@@ -133,17 +138,23 @@ namespace KIOSK_Management.Controllers
             string filename = string.Empty;
             if (HinhAnh != null)
             {
-                //Create folder if not exists
-                //Directory.CreateDirectory("~/Images");
-                string extension = HinhAnh.ContentType.Split('/')[1];
-                filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
-                string targetFolder = Server.MapPath("~/Images/QuangCao");
-                string targetPath = Path.Combine(targetFolder, filename);
-                HinhAnh.SaveAs(targetPath);
-                //Save file if not exists
-                if (!System.IO.File.Exists(targetPath))
+
+                try
                 {
+                    string extension = HinhAnh.ContentType.Split('/')[1];
+                    filename = Path.ChangeExtension(Path.GetRandomFileName(), extension);
+                    string targetFolder = Server.MapPath("~/Images/QuangCao");
+                    string targetPath = Path.Combine(targetFolder, filename);
                     HinhAnh.SaveAs(targetPath);
+                    //Save file if not exists
+                    if (!System.IO.File.Exists(targetPath))
+                    {
+                        HinhAnh.SaveAs(targetPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.ToString());
                 }
             }
             else
